@@ -18,6 +18,7 @@ namespace MapTracker.Mobile
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             RegistrationRequest registration = JsonConvert.DeserializeObject<RegistrationRequest>(requestBody);
 
+            //log in app insights
             log.LogTrace("Incoming Registration: " + JsonConvert.SerializeObject(registration));
 
             return new OkObjectResult("Successfully registered trackingNumber:" + registration.trackingNumber);
