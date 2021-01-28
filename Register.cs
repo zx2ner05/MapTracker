@@ -13,7 +13,7 @@ namespace MapTracker.Mobile
     public static class Register
     {
         [FunctionName("Register")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req, ILogger log)
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             RegistrationRequest registration = JsonConvert.DeserializeObject<RegistrationRequest>(requestBody);
