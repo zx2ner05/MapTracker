@@ -7,8 +7,9 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using MapTracker.Models;
 
-namespace MapTracker.Mobile
+namespace MapTracker
 {
     public static class Register
     {

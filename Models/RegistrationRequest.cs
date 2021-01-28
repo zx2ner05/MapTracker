@@ -1,6 +1,8 @@
-public class RegistrationRequest
+namespace MapTracker.Models
 {
-    public string trackingNumber { get; set; }
-    public string description { get; set; }
-
+    public class RegistrationRequest
+    {
+        public string trackingNumber { get; set; }
+        public string description { get; set; }
+    }
 }
