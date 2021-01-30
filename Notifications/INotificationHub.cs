@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using MapTracker.Models;
 
-namespace MapTracker.Nofitications
+namespace MapTracker.Notifications
 {
     public interface INotificationHub
     {
