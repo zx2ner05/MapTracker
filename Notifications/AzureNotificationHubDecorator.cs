@@ -28,7 +28,8 @@ namespace MapTracker.Notifications
             {
                 InstallationId = request.trackingNumber,
                 PushChannel = request.trackingNumber,
-                Tags = new List<string>() {request.trackingNumber}
+                Tags = new List<string>() {request.trackingNumber},
+                Platform = NotificationPlatform.Fcm
             };
 
             await _hub.CreateOrUpdateInstallationAsync(installation);

@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 using MapTracker.Models;
 using MapTracker.Notifications;
 using MapTracker.Carriers;
+using MapTracker.Carriers.USPS;
+using MapTracker.Models.USPS;
 
 namespace MapTracker
 {
@@ -24,24 +26,28 @@ namespace MapTracker
             //log in app insights
             log.LogTrace("Incoming Registration: " + JsonConvert.SerializeObject(registration));
 
+            //register with azure notification hubs
+            //TODO throwing error when initializing azure notification hub
+            AzureNotificationHubDecorator hub = new AzureNotificationHubDecorator(log);
+            await hub.RegisterAsync(registration);
+
             //identify shipping service provider
             CarrierIdentificationService carrierService = new CarrierIdentificationService();
             switch (carrierService.GetCarrier(registration.trackingNumber))
             {
                 case "USPS":
-                    break;
+                {
+                    UspsTrackingService uspsService = new UspsTrackingService();
+                    TrackResponse uspsTrackResponse = await uspsService.TrackPackages(registration.trackingNumber);
+                    return new OkObjectResult(uspsTrackResponse);
+                }
                 case "UPS":
                     break;
                 case "FEDEX":
                     break;
             }
 
-            //register with azure notification hubs
-            //TODO throwing error when initializing azure notification hub
-            AzureNotificationHubDecorator hub = new AzureNotificationHubDecorator(log);
-            await hub.RegisterAsync(registration);
-
-            return new OkObjectResult("Successfully registered trackingNumber:" + registration.trackingNumber);
+            return new NotFoundResult();
         }
     }
 }
